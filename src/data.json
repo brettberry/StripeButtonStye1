@@ -6,5 +6,7 @@
     "Support",
     "Sign in"
   ],
-  "paymentsText": "A complete commerce toolkit, <br> built for developers."
+  "paymentsText": "A complete commerce toolkit, <br> built for developers.",
+  "pricingText": "Always know what you'll pay.",
+  "docText": "Start integrating Stripe's products <br> and tools."
 }

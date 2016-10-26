@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { paymentsText } from './data.json';
+import { paymentsText, pricingText } from './data.json';
 
 const styles = {
   container: {
@@ -8,11 +8,11 @@ const styles = {
     position: 'absolute',
     backgroundColor: 'white',
     borderRadius: '5px',
+    paddingTop: '10px',
     top: '50px',
-    padding: '20px',
-    paddingRight: '40px',
     left: '50%',
-    transform: 'translateX(-50%)'
+    transform: 'translateX(-50%)',
+    boxShadow: '0 50px 100px rgba(50,50,93,.1), 0 15px 35px rgba(50,50,93,.15), 0 5px 15px rgba(0,0,0,.1)'
   },
   triangle: {
     position: 'absolute',
@@ -22,7 +22,9 @@ const styles = {
     backgroundColor: 'white',
     transform: 'rotate(45deg)',
     left: '50%',
-    marginLeft: '-8px'
+    marginLeft: '-8px',
+    boxShadow: '-3px -3px 5px rgba(82,95,127,.04)',
+    borderRadius: '4px 0 0 0'
   },
   rowDiv: {
     display: 'flex',
@@ -41,29 +43,59 @@ const styles = {
   },
   svgDiv: {
     margin: '10px',
-    marginRight: '20px'
+    marginRight: '20px',
+    marginLeft: '20px'
   },
   textDiv: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    justifyContent: 'left'
+    justifyContent: 'left',
+    marginRight: '40px'
   },
   header: {
     color: '#6772e5',
     fontFamily: 'Open Sans, Helvetica, sans-serif',
-    fontWeight: '400',
-    marginBottom: 0
-    // textTransform: 'uppercase'
+    marginBottom: 0,
+    textTransform: 'uppercase',
+    fontSize: '11pt',
+    fontWeight: '400'
   },
   text: {
-    color: '#888',
+    color: '#7d8ca0',
     fontFamily: 'Open Sans, Helvetica, sans-serif',
-    fontWeight: '400',
-    fontSize: '11pt',
     textAlign: 'left',
     lineHeight: '1.5',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    marginTop: '8px'
+  },
+  bottomSection: {
+    backgroundColor: '#f6f9fc',
+    width: '100%',
+    height: '100px',
+    borderRadius: '0 0 5px 5px',
+    padding: '0px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '10px'
+  },
+  pricing: {
+    color: '#6a75e5',
+    fontFamily: 'Open Sans, Helvetica, sans-serif',
+    textTransform: 'uppercase',
+    fontSize: '11pt',
+    fontWeight: '400'
+  },
+  pricingSubtext: {
+    color: '#7d8ca0',
+    fontFamily: 'Open Sans, Helvetica, sans-serif',
+    marginLeft: '10px'
+  },
+  pricingSvg: {
+    width: '17px',
+    height: '17px',
+    marginRight: '10px'
   }
 };
 
@@ -84,6 +116,7 @@ class ProductsMenu extends Component {
           <PaymentsItem />
           <PaymentsItem />
         </div>
+        <PricingItem />
       </div>
     );
   }
@@ -103,6 +136,18 @@ function PaymentsItem() {
         <h3 style={styles.header}>Payments</h3>
         <p style={styles.text} dangerouslySetInnerHTML={{ __html: paymentsText }}/>
       </div>
+    </div>
+  );
+}
+
+function PricingItem() {
+  return (
+    <div style={styles.bottomSection}>
+      <svg style={styles.pricingSvg}>
+        <path fill="#6772E5" d="M15.998 6.98c0 .24-.083.458-.217.635a1.373 1.373 0 0 1-.187.24l-7.736 7.742c-.534.534-1.4.534-1.934 0L1.41 11.08a1.37 1.37 0 0 1 0-1.935l7.736-7.743c.15-.15.33-.255.52-.32a.918.918 0 0 1 .16-.048c.136-.03.275-.034.412-.02l4.192.002c.867 0 1.57.665 1.57 1.486l-.002 4.48zm-2.366-3.62a1.254 1.254 0 0 0-1.772 1.77 1.254 1.254 0 0 0 1.772-1.77z"/>
+      </svg>
+      <h3 style={styles.pricing}>Pricing</h3>
+      <p style={styles.pricingSubtext}>{pricingText}</p>
     </div>
   );
 }
