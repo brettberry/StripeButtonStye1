@@ -68,7 +68,6 @@ class Home extends Component {
   render() {
     return (
       <div style={styles.navContainer}>
-        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><path d="M0 0h72v72H0V0z" fill="#87bbfd"></path><path d="M39.55 44.65V45H0V12h49.45c.85 0 1.55.7 1.55 1.55V33.5h-.3c-6.15 0-11.15 5-11.15 11.15zM21.5 19c-5.25 0-9.5 4.25-9.5 9.5s4.25 9.5 9.5 9.5 9.5-4.25 9.5-9.5-4.25-9.5-9.5-9.5z" fill="#43458b"></path><path d="M72 60H22.55c-.85 0-1.55-.7-1.55-1.55v-29.9c0-.85.7-1.55 1.55-1.55H72v33zM50.5 34c-5.25 0-9.5 4.25-9.5 9.5s4.25 9.5 9.5 9.5 9.5-4.25 9.5-9.5-4.25-9.5-9.5-9.5z" fill="#FFF"></path></svg> */}
         <div style={styles.navBar}>
           <LogoSection />
           <MidSection />
@@ -93,12 +92,12 @@ function MidSection() {
       <DropDownItem text={data.MenuBar[0]}>
         <ProductsMenu />
       </DropDownItem>
-      <DropDownItem text={data.MenuBar[1]}>
+      {/* <DropDownItem text={data.MenuBar[1]}>
         <DevelopersMenu />
       </DropDownItem>
       <DropDownItem text={data.MenuBar[2]}>
         <CompanyMenu />
-      </DropDownItem>
+      </DropDownItem> */}
     </li>
   );
 }
