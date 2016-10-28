@@ -1,119 +1,170 @@
 import React, { Component } from 'react';
-import data from './data.json';
-import DropDownItem from './DropDownItem';
-import ProductsMenu from './ProductsMenu';
-import DevelopersMenu from './DevelopersMenu';
-import CompanyMenu from './CompanyMenu';
 
 const styles = {
-  navContainer: {
+  container: {
     display: 'flex',
-    minHeight: '50px',
-    minWidth: '100%',
+    position: 'absolute',
+    width: '100%',
+    height: '150%',
     justifyContent: 'center',
-    flexDirection: 'row',
-    position: 'absolute',
-    top: '10px'
+    top: '100px'
   },
-  navBar: {
-    display: 'flex',
-    minHeight: '50px',
-    minWidth: '75%',
-    position: 'absolute',
-    marginTop: '0',
-    marginBottom: '0',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    justifyContent: 'space-between'
+  navContainer: {
+    width: '180px',
+    height: '210px'
   },
-  logoContainer: {
+  listStyle: {
+    listStyleType: 'none',
+    lineHeight: '2',
+    width: '210px',
+    height: '135px',
+    margin: '0',
+    padding: '0'
+  },
+  hoverItem: {
     display: 'flex',
-    width: '60px',
-    height: '50px',
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  logo: {
-    color: 'white',
+    cursor: 'pointer',
+    color: 'black',
     fontFamily: 'Open Sans, Helvetica, sans-serif',
-    fontSize: '1.5em',
-    fontWeight: '400'
+    fontSize: '13pt',
+    fontWeight: '200'
   },
-  midSection: {
+  listItem: {
     display: 'flex',
-    height: '50px',
-    minWidth: '33%',
-    backgroundColor: 'transparent',
-    justifyContent: 'space-between'
-  },
-  endSection: {
-    display: 'flex',
-    height: '50px',
-    minWidth: '15%',
-    backgroundColor: 'transparent',
-    justifyContent: 'space-between'
-  },
-  menuItems: {
-    color: 'white',
+    alignItems: 'center',
+    cursor: 'pointer',
+    color: '#6772e5',
     fontFamily: 'Open Sans, Helvetica, sans-serif',
-    fontSize: '1em',
-    fontWeight: '100',
-    cursor: 'pointer'
+    fontSize: '13pt',
+    fontWeight: '200'
   },
   svg: {
-    width: '62px',
-    height: '62px',
-    fill: 'white',
-    display: 'flex',
-    alignItems: 'center'
+    width: '33px',
+    height: '34px',
+    alignSelf: 'center',
+    padding: '10px',
+    fill: '#6772E5'
+  },
+  svgHover: {
+    width: '33px',
+    height: '34px',
+    alignSelf: 'center',
+    padding: '10px',
+    fill: 'black'
+  },
+  highlight: {
+    position: 'absolute',
+    width: '210px',
+    height: '34px',
+    backgroundColor: 'white',
+    boxShadow: '0 2px 4px rgba(50,50,93,.1)',
+    zIndex: -1
   }
 };
 
+const HoverState = {
+  None: -1,
+  Payments: 0,
+  Customers: 1,
+  Subscriptions: 2,
+  Reporting: 3
+};
+
 class Home extends Component {
+
+  state = {
+    hoverIndex: HoverState.None
+  }
+
+  handleHover(hoverIndex) {
+    this.setState({
+      hoverIndex
+    });
+  }
+
   render() {
+    const { hoverIndex } = this.state;
     return (
-      <div style={styles.navContainer}>
-        <div style={styles.navBar}>
-          <LogoSection />
-          <MidSection />
-          <EndSection />
+      <div style={styles.container}>
+        <div style={styles.navContainer}>
+        <span style={styles.highlight}/>
+          <ul style={styles.listStyle}>
+            <PaymentButton isHovered={hoverIndex == HoverState.Payments} handleHover={this.handleHover.bind(this)}/>
+            <CustomersButton isHovered={hoverIndex == HoverState.Customers} handleHover={this.handleHover.bind(this)}/>
+            <SubscriptionsButton isHovered={hoverIndex == HoverState.Subscriptions} handleHover={this.handleHover.bind(this)}/>
+            <ReportingButton isHovered={hoverIndex == HoverState.Reporting} handleHover={this.handleHover.bind(this)}/>
+          </ul>
         </div>
       </div>
     );
   }
 }
 
-function LogoSection() {
+function PaymentButton({ isHovered, handleHover }) {
+  const textStyle = isHovered ? styles.hoverItem : styles.listItem;
+  const iconStyle = isHovered ? styles.svgHover : styles.svg;
   return (
-    <div style={styles.logoContainer}>
-      <svg style={styles.svg}>
-        <path d="M5 10.1c0-.6.6-.9 1.4-.9 1.2 0 2.8.4 4 1.1V6.5c-1.3-.5-2.7-.8-4-.8C3.2 5.7 1 7.4 1 10.3c0 4.4 6 3.6 6 5.6 0 .7-.6 1-1.5 1-1.3 0-3-.6-4.3-1.3v3.8c1.5.6 2.9.9 4.3.9 3.3 0 5.5-1.6 5.5-4.5.1-4.8-6-3.9-6-5.7zM29.9 20h4V6h-4v14zM16.3 2.7l-3.9.8v12.6c0 2.4 1.8 4.1 4.1 4.1 1.3 0 2.3-.2 2.8-.5v-3.2c-.5.2-3 .9-3-1.4V9.4h3V6h-3V2.7zm8.4 4.5L24.6 6H21v14h4v-9.5c1-1.2 2.7-1 3.2-.8V6c-.5-.2-2.5-.5-3.5 1.2zm5.2-2.3l4-.8V.8l-4 .8v3.3zM61.1 13c0-4.1-2-7.3-5.8-7.3s-6.1 3.2-6.1 7.3c0 4.8 2.7 7.2 6.6 7.2 1.9 0 3.3-.4 4.4-1.1V16c-1.1.6-2.3.9-3.9.9s-2.9-.6-3.1-2.5H61c.1-.2.1-1 .1-1.4zm-7.9-1.5c0-1.8 1.1-2.5 2.1-2.5s2 .7 2 2.5h-4.1zM42.7 5.7c-1.6 0-2.5.7-3.1 1.3l-.1-1h-3.6v18.5l4-.7v-4.5c.6.4 1.4 1 2.8 1 2.9 0 5.5-2.3 5.5-7.4-.1-4.6-2.7-7.2-5.5-7.2zm-1 11c-.9 0-1.5-.3-1.9-.8V10c.4-.5 1-.8 1.9-.8 1.5 0 2.5 1.6 2.5 3.7 0 2.2-1 3.8-2.5 3.8z"/>
+    <li style={textStyle}
+        onMouseOver={() => handleHover(HoverState.Payments)}
+        onMouseOut={() => handleHover(HoverState.None)}>
+      <svg style={iconStyle}
+           onMouseOver={() => handleHover(HoverState.Payments)}
+           onMouseOut={() => handleHover(HoverState.None)}>
+        <path d="M0 3a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3zm0 1h13v2H0V4z"/>
       </svg>
-    </div>
-  );
-}
-
-function MidSection() {
-  return (
-    <li style={styles.midSection}>
-      <DropDownItem text={data.MenuBar[0]}>
-        <ProductsMenu />
-      </DropDownItem>
-      <DropDownItem text={data.MenuBar[1]}>
-        <DevelopersMenu />
-      </DropDownItem>
-      <DropDownItem text={data.MenuBar[2]}>
-        <CompanyMenu />
-      </DropDownItem>
+      Payments
     </li>
   );
 }
 
-function EndSection() {
+function CustomersButton({ isHovered, handleHover }) {
+  const textStyle = isHovered ? styles.hoverItem : styles.listItem;
+  const iconStyle = isHovered ? styles.svgHover : styles.svg;
   return (
-    <li style={styles.endSection}>
-      <h3 style={styles.menuItems}>{data.MenuBar[3]}</h3>
-      <h3 style={styles.menuItems}>{data.MenuBar[4]}</h3>
+    <li style={textStyle}
+        onMouseOver={() => handleHover(HoverState.Customers)}
+        onMouseOut={() => handleHover(HoverState.None)}>
+      <svg style={iconStyle}
+           onMouseOver={() => handleHover(HoverState.Customers)}
+           onMouseOut={() => handleHover(HoverState.None)}>
+        <path d="M12.5 11.75c0-1.24-2.69-2.25-6-2.25s-6 1-6 2.25c0 .46.37.9 1.01 1.25h9.98c.64-.36 1.01-.79 1.01-1.25zM6.5 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+      </svg>
+      Customers
+    </li>
+  );
+}
+
+function SubscriptionsButton({ isHovered, handleHover }) {
+  const textStyle = isHovered ? styles.hoverItem : styles.listItem;
+  const iconStyle = isHovered ? styles.svgHover : styles.svg;
+  return (
+    <li style={textStyle}
+        onMouseOver={() => handleHover(HoverState.Subscriptions)}
+        onMouseOut={() => handleHover(HoverState.None)}>
+      <svg style={iconStyle}
+        onMouseOver={() => handleHover(HoverState.Subscriptions)}
+        onMouseOut={() => handleHover(HoverState.None)}>
+        <path d="M6.3 6.3l1.4 1.4L11.5 4 7.7.3 6.3 1.7 7.58 3H6.5a5.5 5.5 0 1 0 5.48 5H9.96A3.5 3.5 0 1 1 6.5 5h1.09l-1.3 1.3z"/>
+      </svg>
+      Subscriptions
+    </li>
+  );
+}
+
+function ReportingButton({ isHovered, handleHover }) {
+  const textStyle = isHovered ? styles.hoverItem : styles.listItem;
+  const iconStyle = isHovered ? styles.svgHover : styles.svg;
+  return (
+    <li style={textStyle}
+        onMouseOver={() => handleHover(HoverState.Reporting)}
+        onMouseOut={() => handleHover(HoverState.None)}>
+      <svg style={iconStyle}
+           onMouseOver={() => handleHover(HoverState.Reporting)}
+           onMouseOut={() => handleHover(HoverState.None)}>
+        <path d="M0 6.5c0-.27.22-.5.5-.5h2c.28 0 .5.23.5.5v6a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-6zm5-5c0-.28.22-.5.5-.5h2c.28 0 .5.23.5.5v11a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-11zm5 2.01a.5.5 0 0 1 .5-.51h2c.28 0 .5.23.5.51v8.98a.5.5 0 0 1-.5.51h-2a.5.5 0 0 1-.5-.51V3.51z"/>
+      </svg>
+      Reporting
     </li>
   );
 }
